@@ -1,8 +1,13 @@
 const express = require('express');
 const mongoose = require('mongoose');
-connection = "mongodb+srv://wbkarlen:dexter@app.dalfctw.mongodb.net/?retryWrites=true&w=majority";
-
+const cors = require('cors');
 mongoose.set('strictQuery', false);
+
+const app = express(); 
+app.use(express.json());
+app.use(cors());
+
+connection = "mongodb+srv://wbkarlen:dexter@app.dalfctw.mongodb.net/?retryWrites=true&w=majority";
 
 mongoose
     .connect(connection,
@@ -15,10 +20,9 @@ mongoose
     .catch(console.error)
 
 
-const app = express(); 
-app.use(express.json());
 
-app.listen(8080, () => console.log('Sever listening on port 8080')); 
+
+app.listen(8080, () => console.log('Server listening on port 8080')); 
 const Post = require("./models/Post"); //import Schema
 
 app.get('/feed', async (req, res) => {
@@ -32,8 +36,9 @@ app.post('/feed/new', (req, res) => {
         user: req.body.user,
         timestamp: Date.now()
     });
+    post.save();
 });
-post.save();
+//post.save();
 
 // const newPost = new Post({
 //     content: "1st Post!!!",
