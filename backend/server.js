@@ -38,11 +38,3 @@ app.post('/feed/new', (req, res) => {
     });
     post.save();
 });
-//post.save();
-
-// const newPost = new Post({
-//     content: "1st Post!!!",
-//     user: "Byron",
-//     timestamp: Date.now()
-// });
-// newPost.save(); //saves the collection with the updated value
