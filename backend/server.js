@@ -48,7 +48,7 @@ app.put('/feed/edit/:_id', async (req, res) => {
 });
 
 app.delete('/feed/delete/:_id', async (req, res) => {
-    const result = await Post.findByIDAndDelete(req.params._id);
+    const result = await Post.findOneAndDelete(req.params._id);
     res.json(result);
 });
 
