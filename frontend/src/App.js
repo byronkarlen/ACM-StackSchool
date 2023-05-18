@@ -5,21 +5,25 @@ import {useState, useEffect} from 'react';
 
 function App() {
 
-  let [posts, setPosts] = useState([]); //this is problematic
+  const [posts, setPosts] = useState([]); 
+  const [newPostAdded, setNewPostAdded] = useState(0);
   const [message, setMessage] = useState('');
 
   const URL = "http://localhost:8080";
-  const getFeed = () =>{
-    axios.get(URL + "/feed")
+  const getFeed = () => {
+    console.log('getting feed');
+      axios.get(URL + "/feed")
       .then(response => {
         setPosts(response.data);
       })
-      .catch(console.error)   
+      .catch(console.error)
+
   }
 
   useEffect(() => {
-    getFeed();
-  }, [posts]); //Only call API once when it initially loads
+    console.log('HERE:');
+    getFeed(); 
+  }, [newPostAdded]); 
 
   function addPost(){
 
@@ -35,7 +39,23 @@ function App() {
     .catch(console.error)
 
     setMessage('');
+    setNewPostAdded(!newPostAdded);
   }
+
+  function formatDate(timestamp){
+    const date = new Date(timestamp);
+    const formattedDate = date.toLocaleString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true
+    });
+    return formattedDate;
+  }
+
 
   return (
     <div>
@@ -53,7 +73,8 @@ function App() {
         <div key={i}>
           <h3>{post.user}</h3>
           <p>{post.content}</p>
-          <p>{post.num_likes} {post.timestamp}</p>
+          <p>{post.num_likes} Likes </p>
+          <p>{formatDate(post.timestamp)}</p>
         </div>
       )}
     </div>
