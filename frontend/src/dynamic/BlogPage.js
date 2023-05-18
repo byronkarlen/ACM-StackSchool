@@ -38,23 +38,18 @@ function BlogPage({setCurrentPage}) {
         })
         .catch(console.error)
     }
-
-    function formatDate(timestamp){
-        const date = new Date(timestamp);
-        const formattedDate = date.toLocaleString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-            hour12: true
-        });
-        return formattedDate;
-    }
     
     function deletePost(id){
         axios.delete(URL + '/feed/delete/' + id)
+        .then(response => {
+            console.log(response)
+            getFeed();
+        })
+        .catch(console.error);
+    }
+    
+    function likePost(id){
+        axios.put(URL + '/feed/like/' + id)
         .then(response => {
             console.log(response)
             getFeed();
@@ -84,11 +79,26 @@ function BlogPage({setCurrentPage}) {
             <p>{post.content}</p>
             <p>{post.num_likes} Likes </p>
             <p>{formatDate(post.timestamp)}</p>
+            <button onClick={() => likePost(post._id)}>Like Post</button>
             <button onClick={() => deletePost(post._id)}>Delete</button>
         </div>
         )}
     </div>
     );
+}
+
+function formatDate(timestamp){
+    const date = new Date(timestamp);
+    const formattedDate = date.toLocaleString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
+    });
+    return formattedDate;
 }
 
 export default BlogPage;

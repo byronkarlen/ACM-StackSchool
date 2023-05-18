@@ -20,8 +20,9 @@ mongoose
 
 app.listen(8080, () => console.log('Server listening on port 8080')); 
 
-const Post = require("./models/Post"); //import Schema
-const User = require("./models/User");
+//import models for the schemas
+const Post = require("./models/Post"); 
+// const User = require("./models/User");
 
 app.get('/feed', async (req, res) => {
     const feed = await Post.find();
@@ -41,7 +42,6 @@ app.post('/feed/new', async (req, res) => {
 
 app.put('/feed/edit/:_id', async (req, res) => {
     const post = await Post.findById(req.params._id);
-
     post.content = req.body.content;
     post.save();
     res.json(post);
@@ -52,63 +52,62 @@ app.delete('/feed/delete/:_id', async (req, res) => {
     res.json(result);
 });
 
-app.put('/feed/like:_id', async (req, res) => {
+app.put('/feed/like/:_id', async (req, res) => {
     const post = await Post.findById(req.params._id);
-
     post.num_likes++;
-    post.save();
+    await post.save();
     res.json(post);
 });
 
-app.get('/users', async (req, res) => {
-    const users = await User.find();
-    res.json(users);
-});
+// app.get('/users', async (req, res) => {
+//     const users = await User.find();
+//     res.json(users);
+// });
 
-app.post('/users/new', async (req,res) =>{
-    // Check for an already existing user
-    const duplicateUser = await User.findOne({ username: req.body.username });
-    if (duplicateUser){
-        res.json({ 'error': 'Duplicate username exists '});
-        return;
-    }
+// app.post('/users/new', async (req,res) =>{
+//     // Check for an already existing user
+//     const duplicateUser = await User.findOne({ username: req.body.username });
+//     if (duplicateUser){
+//         res.json({ 'error': 'Duplicate username exists '});
+//         return;
+//     }
 
-    const user = new User({
-        username: req.body.username,
-        password: req.body.password
-    }); 
+//     const user = new User({
+//         username: req.body.username,
+//         password: req.body.password
+//     }); 
 
-    await user.save();
-    res.json(user);
-});
+//     await user.save();
+//     res.json(user);
+// });
 
-app.delete('/users/delete/:_id', async (req,res) =>{
-    const result = await User.findByIDAndDelete(req.params._id);
-    res.json(result);
-});
+// app.delete('/users/delete/:_id', async (req,res) =>{
+//     const result = await User.findByIDAndDelete(req.params._id);
+//     res.json(result);
+// });
 
-app.put('/users/edit/:id', async (req, res) => {
-    const user = await User.findById(req.params._id);
+// app.put('/users/edit/:id', async (req, res) => {
+//     const user = await User.findById(req.params._id);
 
-    user.username = req.body.username;
-    user.password = req.body.password;
+//     user.username = req.body.username;
+//     user.password = req.body.password;
     
-    await user.save();
-    res.json(user);
-});
+//     await user.save();
+//     res.json(user);
+// });
 
-app.post('/login', async (req, res) => {
-    const user = await User.findOne({
-        username: req.body.username
-    });
-    if(!user){
-        res.json({ 'error': 'Username does not exist' });
-        return;
-    }
-    if(user.password === req.body.password){
-        res.json(user);
-    }
-    else {
-        res.json({ 'error': 'Incorrect passwrord'});
-    }
-});
+// app.post('/login', async (req, res) => {
+//     const user = await User.findOne({
+//         username: req.body.username
+//     });
+//     if(!user){
+//         res.json({ 'error': 'Username does not exist' });
+//         return;
+//     }
+//     if(user.password === req.body.password){
+//         res.json(user);
+//     }
+//     else {
+//         res.json({ 'error': 'Incorrect passwrord'});
+//     }
+// });

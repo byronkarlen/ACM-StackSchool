@@ -7,7 +7,7 @@ const HomePage = ({setCurrentPage}) => {
     <div className="navbar"> 
         <div className="container">
             <nav>
-                <button onClick={() => setCurrentPage('blog-page')}>My Blog Page</button>
+                <button onClick={() => setCurrentPage('blog-page')}>Blog Page</button>
             </nav>
         </div>
     </div>
