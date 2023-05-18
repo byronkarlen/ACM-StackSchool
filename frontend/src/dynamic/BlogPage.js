@@ -3,37 +3,36 @@ import axios from 'axios';
 import {useState, useEffect} from 'react';
 
 function BlogPage({setCurrentPage}) {
+  
+    const [posts, setPosts] = useState([]); 
+    const [newPostAdded, setNewPostAdded] = useState(0);
+    const [message, setMessage] = useState('');
 
-  const [posts, setPosts] = useState([]); 
-  const [newPostAdded, setNewPostAdded] = useState(0);
-  const [message, setMessage] = useState('');
+    const URL = "http://localhost:8080";
 
-  const URL = "http://localhost:8080";
+    useEffect(() => {
+        const getFeed = () => {
+            console.log('getting feed');
+                axios.get(URL + "/feed")
+                .then(response => {
+                setPosts(response.data);
+                })
+                .catch(console.error)
+        }
+        console.log('HERE:');
+        getFeed();}, 
+    []); 
 
-  useEffect(() => {
-    const getFeed = () => {
-        console.log('getting feed');
-          axios.get(URL + "/feed")
-          .then(response => {
-            setPosts(response.data);
-          })
-          .catch(console.error)
-    }
-
-    console.log('HERE:');
-    getFeed(); 
-  }, []); 
-
-  function addPost(){
+    function addPost(){
 
     if(message === ''){
-      alert('message cannot be empty!')
-      return;
+        alert('message cannot be empty!')
+        return;
     }
 
     axios.post(URL + '/feed/new', {
-      content: message, 
-      user: "Byron Karlen"
+        content: message, 
+        user: "Byron Karlen"
     }).then(response => {
         console.log(response);
         const newPost = response.data;
@@ -42,21 +41,21 @@ function BlogPage({setCurrentPage}) {
 
     setMessage('');
     setNewPostAdded(!newPostAdded);
-  }
+    }
 
-  function formatDate(timestamp){
+    function formatDate(timestamp){
     const date = new Date(timestamp);
     const formattedDate = date.toLocaleString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      hour12: true
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: true
     });
     return formattedDate;
-  }
+    }
 
 
   return (
