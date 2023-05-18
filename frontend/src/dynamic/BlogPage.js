@@ -60,8 +60,9 @@ function BlogPage({setCurrentPage}) {
 
     return (
     <div>
+        <h1>Blog Page</h1>
         <div>
-        <button onClick={() => setCurrentPage('home')}>Home Page</button>
+        <button onClick={() => setCurrentPage('home-page')}>Home Page</button>
         </div>
         <div>
         <input
