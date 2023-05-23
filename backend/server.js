@@ -22,8 +22,9 @@ app.listen(8080, () => console.log('Server listening on port 8080'));
 
 //import models for the schemas
 const Post = require("./models/Post"); 
-// const User = require("./models/User");
+const User = require("./models/User");
 
+// Posts
 app.get('/feed', async (req, res) => {
     const feed = await Post.find();
     res.json(feed);
@@ -33,6 +34,7 @@ app.post('/feed/new', async (req, res) => {
     const post = new Post({
         content: req.body.content,
         user: req.body.user,
+        num_likes: 0,
         timestamp: Date.now()
     });
     await post.save();
@@ -59,55 +61,56 @@ app.put('/feed/like/:_id', async (req, res) => {
     res.json(post);
 });
 
-// app.get('/users', async (req, res) => {
-//     const users = await User.find();
-//     res.json(users);
-// });
 
-// app.post('/users/new', async (req,res) =>{
-//     // Check for an already existing user
-//     const duplicateUser = await User.findOne({ username: req.body.username });
-//     if (duplicateUser){
-//         res.json({ 'error': 'Duplicate username exists '});
-//         return;
-//     }
+// Users
+app.get('/users', async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+});
 
-//     const user = new User({
-//         username: req.body.username,
-//         password: req.body.password
-//     }); 
+app.post('/users/new', async (req,res) =>{
+    // Check for an already existing user
+    const duplicateUser = await User.findOne({ username: req.body.username });
+    if (duplicateUser){
+        res.json({ 'error': 'Duplicate username exists '});
+        return;
+    }
 
-//     await user.save();
-//     res.json(user);
-// });
+    const user = new User({
+        username: req.body.username,
+        password: req.body.password
+    }); 
 
-// app.delete('/users/delete/:_id', async (req,res) =>{
-//     const result = await User.findByIDAndDelete(req.params._id);
-//     res.json(result);
-// });
+    await user.save();
+    res.json(user);
+});
 
-// app.put('/users/edit/:id', async (req, res) => {
-//     const user = await User.findById(req.params._id);
+app.delete('/users/delete/:_id', async (req,res) =>{
+    const result = await User.findOneAndDelete(req.params._id);
+    res.json(result);
+});
 
-//     user.username = req.body.username;
-//     user.password = req.body.password;
+app.put('/users/edit/:_id', async (req, res) => {
+    const user = await User.findById(req.params._id);
+
+    user.username = req.body.username;
+    user.password = req.body.password;
     
-//     await user.save();
-//     res.json(user);
-// });
+    await user.save();
+    res.json(user);
+});
 
-// app.post('/login', async (req, res) => {
-//     const user = await User.findOne({
-//         username: req.body.username
-//     });
-//     if(!user){
-//         res.json({ 'error': 'Username does not exist' });
-//         return;
-//     }
-//     if(user.password === req.body.password){
-//         res.json(user);
-//     }
-//     else {
-//         res.json({ 'error': 'Incorrect passwrord'});
-//     }
-// });
+app.post('/login', async (req, res) => {
+    const user = await User.findOne({ username: req.body.username });
+    if(!user){
+
+        res.json({ 'error': 'Username does not exist' });
+        return;
+    }
+    if(user.password === req.body.password){
+        res.json(user);
+    }
+    else {
+        res.json({ 'error': 'Incorrect passwrord'});
+    }
+});

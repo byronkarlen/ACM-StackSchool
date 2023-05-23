@@ -1,8 +1,9 @@
 import './BlogPage.css';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
+import Nav from '../Nav'
 
-function BlogPage({setCurrentPage}) {
+function BlogPage({changePage}) {
   
     const [posts, setPosts] = useState([]); 
     const [message, setMessage] = useState('');
@@ -60,9 +61,9 @@ function BlogPage({setCurrentPage}) {
 
     return (
     <div>
+        <Nav changePage={changePage}/>
         <h1>Blog Page</h1>
         <div>
-        <button onClick={() => setCurrentPage('home-page')}>Home Page</button>
         </div>
         <div>
         <input

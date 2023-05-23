@@ -1,17 +1,12 @@
 import './HomePage.css';
+import Nav from '../Nav'
 
 
-const HomePage = ({setCurrentPage}) => {
+const HomePage = ({changePage}) => {
     return (
     <>
-    <h1>Home Page</h1>
-    <div className="navbar"> 
-        <div className="container">
-            <nav>
-                <button onClick={() => setCurrentPage('login-page')}>Login</button>
-            </nav>
-        </div>
-    </div>
+        <button onClick={() => changePage('login-page')}>Login</button>
+        <button onClick={() => changePage('create-account-page')}>Create Account</button>
     </>
     );
 }

@@ -1,0 +1,65 @@
+# POSTS
+# GET /feed HTTP/1.1
+# Host: localhost:8080
+
+# POST /feed/new HTTP/1.1
+# Host: localhost:8080 
+# content-type: application/json
+
+# {
+#     "content": "Test Post #1", 
+#     "user": "Byron Karlen"
+# }
+
+# PUT /feed/edit/646bb29cf75c397637e7d9b6 HTTP/1.1
+# Host: localhost:8080 
+# content-type: application/json
+
+# {
+#     "content": "Test Post #1",
+#     "user": "N/A"
+# }
+
+# DELETE /feed/delete/6465d50ed94daf4187e5003c HTTP/1.1
+# Host: localhost:8080 
+
+# PUT /feed/like/646bb29cf75c397637e7d9b6 HTTP/1.1
+# Host: localhost:8080 
+
+
+# # USERS
+# GET /users HTTP/1.1
+# Host: localhost:8080
+
+# POST /users/new HTTP/1.1
+# Host: localhost:8080 
+# content-type: application/json
+
+# {
+#     "username": "lilyneff", 
+#     "password": "password"
+# }
+
+# DELETE /users/delete/646c5bc324b6ea4002ef81a6 HTTP/1.1
+# Host: localhost:8080
+
+# PUT /users/edit/646c45fa5e8a511c0482cce8 HTTP/1.1
+# Host: localhost:8080 
+# content-type: application/json
+
+# {
+#     "username": "lilyneff2", 
+#     "password": "newpassword"
+# }
+
+POST /login HTTP/1.1
+Host: localhost:8080 
+content-type: application/json
+
+{
+    "username": "lilyneff3", 
+    "password": "password3"
+}
+
+# GET /users HTTP/1.1
+# Host: localhost:8080

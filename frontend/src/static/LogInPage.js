@@ -1,19 +1,56 @@
 import './LoginPage.css';
+import { useState } from 'react';
+import axios from 'axios';
 
 
-const LoginPage = ({setCurrentPage}) => {
+const LoginPage = ({changePage, changeUser}) => {
+    const [text1, setText1] = useState('');
+    const [text2, setText2] = useState('');
+
+    const URL = "http://localhost:8080";
+    
+    function handleUsernameChange(event){
+        setText1(event.target.value);
+    }
+
+    function handlePasswordChange(event){
+        setText2(event.target.value);
+    }
+
+    function handleSubmit(event){
+        event.preventDefault(); // This is important!!@
+        console.log('In handleSubmit()');
+        axios.post(URL + '/login', {
+            username: text1,
+            password: text2
+        })
+        .then(response => {
+            console.log(response);
+            console.log('here');
+            console.log(response.data.username);
+            if(response.data.username){
+                console.log('logged in!');
+            }
+            else{
+                console.log('error logging in');
+            }
+        })
+        .catch(console.error)
+    }
+    
     return (
-    <>
-    <h1>Login Page</h1>
-    <div className="navbar"> 
-        <div className="container">
-            <nav>
-                <button onClick={() => setCurrentPage('blog-page')}>Blog</button>
-                <button onClick={() => setCurrentPage('home-page')}>Home</button>
-            </nav>
-        </div>
-    </div>
-    </>
+        <>
+        <h1>Login Page</h1>
+        <form onSubmit={handleSubmit}>
+            <label>Username: 
+                <input type="text" value={text1} onChange={handleUsernameChange} />
+            </label>
+            <label>Password: 
+                <input type="text" value={text2} onChange={handlePasswordChange} />
+            </label>
+            <button type="submit">Submit</button>
+        </form>
+        </>
     );
 }
 
