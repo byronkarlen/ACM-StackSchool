@@ -50,7 +50,7 @@ const LoginPage = ({changePage, changeUser}) => {
                 <input type="text" value={text1} onChange={handleUsernameChange} />
             </label>
             <label>Password: 
-                <input type="text" value={text2} onChange={handlePasswordChange} />
+                <input type="password" value={text2} onChange={handlePasswordChange} />
             </label>
             <button type="submit">Submit</button>
         </form>

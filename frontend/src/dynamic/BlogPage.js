@@ -1,7 +1,6 @@
 import './BlogPage.css';
 import axios from 'axios';
 import {useState, useEffect} from 'react';
-import Nav from '../Nav'
 
 function BlogPage({changePage, changeUser, currentUser}) {
   
@@ -82,7 +81,8 @@ function BlogPage({changePage, changeUser, currentUser}) {
         <button onClick={() => addPost()}>Post</button>
         </div>
 
-        {posts.map((post, i) => 
+        {
+        posts.map((post, i) => 
         <div key={i}>
             <h3>{post.user}</h3>
             <p>{post.content}</p>
@@ -91,7 +91,8 @@ function BlogPage({changePage, changeUser, currentUser}) {
             <button onClick={() => likePost(post._id)}>Like Post</button>
             <button onClick={() => deletePost(post._id)}>Delete</button>
         </div>
-        )}
+        )
+        }
     </div>
     );
 }

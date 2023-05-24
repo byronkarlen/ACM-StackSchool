@@ -1,5 +1,4 @@
 import './HomePage.css';
-import Nav from '../Nav'
 
 
 const HomePage = ({changePage, currentUser}) => {
