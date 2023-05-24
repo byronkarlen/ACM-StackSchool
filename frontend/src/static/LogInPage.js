@@ -30,9 +30,12 @@ const LoginPage = ({changePage, changeUser}) => {
             console.log(response.data.username);
             if(response.data.username){
                 console.log('logged in!');
+                changeUser(response.data.username);
+                changePage('blog-page');
             }
             else{
                 console.log('error logging in');
+                alert('Incorrect username/password')
             }
         })
         .catch(console.error)
@@ -40,6 +43,7 @@ const LoginPage = ({changePage, changeUser}) => {
     
     return (
         <>
+        <button onClick={() => changePage('home-page')}>Home</button>
         <h1>Login Page</h1>
         <form onSubmit={handleSubmit}>
             <label>Username: 
@@ -50,6 +54,10 @@ const LoginPage = ({changePage, changeUser}) => {
             </label>
             <button type="submit">Submit</button>
         </form>
+        <section>
+            <h2>Don't have an account. Create one here:</h2>
+            <button onClick={() => changePage('create-account-page')}>Create Account</button>
+        </section>
         </>
     );
 }

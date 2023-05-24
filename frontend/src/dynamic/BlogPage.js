@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useState, useEffect} from 'react';
 import Nav from '../Nav'
 
-function BlogPage({changePage}) {
+function BlogPage({changePage, changeUser, currentUser}) {
   
     const [posts, setPosts] = useState([]); 
     const [message, setMessage] = useState('');
@@ -27,10 +27,10 @@ function BlogPage({changePage}) {
             alert('message cannot be empty!')
             return;
         }
-
+        console.log('Current user ' + currentUser);
         axios.post(URL + '/feed/new', {
             content: message, 
-            user: "Byron Karlen"
+            user: currentUser
         })
         .then(response => {
             console.log(response);
@@ -58,10 +58,17 @@ function BlogPage({changePage}) {
         .catch(console.error);
     }
 
+    function handleLogout(){
+        changeUser('');
+        changePage('home-page');
+    }
+
 
     return (
     <div>
-        <Nav changePage={changePage}/>
+        <p>Current User: {currentUser}</p>
+        <button onClick={() => changePage('home-page')}>Home</button>
+        <button onClick={handleLogout}>Logout</button>
         <h1>Blog Page</h1>
         <div>
         </div>
