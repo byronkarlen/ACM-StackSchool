@@ -40,6 +40,7 @@ function BlogPage({changePage, changeUser, currentUser}) {
     }
     
     function deletePost(id){
+        console.log('Deleting post ' + id);
         axios.delete(URL + '/feed/delete/' + id)
         .then(response => {
             console.log(response)
@@ -62,6 +63,20 @@ function BlogPage({changePage, changeUser, currentUser}) {
         changePage('home-page');
     }
 
+    function getPosts(){
+        let myPosts = posts;
+        return myPosts.map((post, i) => 
+        <div key={i}>
+            <h3>{post.user}</h3>
+            <p>{post.content}</p>
+            <p>{post.num_likes} Likes </p>
+            <p>{formatDate(post.timestamp)}</p>
+            <button onClick={() => likePost(post._id)}>Like Post</button>
+            <button onClick={() => deletePost(post._id)}>Delete</button>
+        </div>
+        );
+    }
+
 
     return (
     <div>
@@ -81,18 +96,7 @@ function BlogPage({changePage, changeUser, currentUser}) {
         <button onClick={() => addPost()}>Post</button>
         </div>
 
-        {
-        posts.map((post, i) => 
-        <div key={i}>
-            <h3>{post.user}</h3>
-            <p>{post.content}</p>
-            <p>{post.num_likes} Likes </p>
-            <p>{formatDate(post.timestamp)}</p>
-            <button onClick={() => likePost(post._id)}>Like Post</button>
-            <button onClick={() => deletePost(post._id)}>Delete</button>
-        </div>
-        )
-        }
+        {getPosts()}
     </div>
     );
 }

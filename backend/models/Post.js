@@ -16,7 +16,7 @@ const PostSchema = new Schema({
     },
     timestamp: {
         type: Number
-    },
+    }
 });
 
 const Post = mongoose.model("Post", PostSchema);

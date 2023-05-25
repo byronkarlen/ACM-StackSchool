@@ -3,14 +3,25 @@ import HomePage from './static/HomePage'
 import LoginPage from './static/LoginPage'
 import CreateAccountPage from './static/CreateAccountPage'
 
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 function App() {
 
   const [currentPage, setCurrentPage] = useState('home-page');
   const [currentUser, setCurrentUser] = useState('');
+
+  // Users mantain their state across page refresh
+  useEffect(() => {
+    setCurrentUser(window.localStorage.getItem('currentUser'));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem('currentUser', currentUser);
+  }, [currentUser]);
   
+
   console.log('Rendering App component');
+  console.log('Current user is ' + currentUser);
 
   function changePage(newPage){
     if(newPage === 'home-page'){
@@ -34,7 +45,7 @@ function App() {
 
   let output;
   if (currentPage === 'home-page'){
-    output = <HomePage changePage={changePage} currentUser={currentUser}/>;
+    output = <HomePage changePage={changePage} currentUser={currentUser} changeUser={changeUser}/>;
   } 
   else if (currentPage === 'login-page'){
     output = <LoginPage changePage={changePage} changeUser={changeUser}/>;

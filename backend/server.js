@@ -23,10 +23,11 @@ app.listen(8080, () => console.log('Server listening on port 8080'));
 //import models for the schemas
 const Post = require("./models/Post"); 
 const User = require("./models/User");
+const { json } = require('express');
 
 // Posts
 app.get('/feed', async (req, res) => {
-    const feed = await Post.find();
+    const feed = await Post.find().sort({ timestamp: -1 });
     res.json(feed);
 });
 
@@ -50,9 +51,18 @@ app.put('/feed/edit/:_id', async (req, res) => {
 });
 
 app.delete('/feed/delete/:_id', async (req, res) => {
-    const result = await Post.findOneAndDelete(req.params._id);
-    res.json(result);
+    try {
+        console.log('id of document to be deleted:', req.params._id);
+        const result = await Post.findOneAndDelete({ _id: req.params._id });
+        console.log('Deleted User:', result);
+        res.json(result);
+    } 
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'An error occurred while deleting the document' });
+    }
 });
+
 
 app.put('/feed/like/:_id', async (req, res) => {
     const post = await Post.findById(req.params._id);
@@ -86,8 +96,16 @@ app.post('/users/new', async (req,res) =>{
 });
 
 app.delete('/users/delete/:_id', async (req,res) =>{
-    const result = await User.findOneAndDelete(req.params._id);
-    res.json(result);
+    try {
+        console.log('id of document to be deleted:', req.params._id);
+        const result = await User.findOneAndDelete({ _id: req.params._id });
+        console.log('Deleted User:', result);
+        res.json(result);
+    } 
+    catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'An error occurred while deleting the document' });
+    }
 });
 
 app.put('/users/edit/:_id', async (req, res) => {
@@ -103,7 +121,6 @@ app.put('/users/edit/:_id', async (req, res) => {
 app.post('/login', async (req, res) => {
     const user = await User.findOne({ username: req.body.username });
     if(!user){
-
         res.json({ 'error': 'Username does not exist' });
         return;
     }

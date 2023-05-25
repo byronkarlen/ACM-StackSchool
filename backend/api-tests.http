@@ -20,8 +20,8 @@
 #     "user": "N/A"
 # }
 
-# DELETE /feed/delete/6465d50ed94daf4187e5003c HTTP/1.1
-# Host: localhost:8080 
+DELETE /feed/delete/646e7a2db4b8ec9420644f71 HTTP/1.1
+Host: localhost:8080 
 
 # PUT /feed/like/646bb29cf75c397637e7d9b6 HTTP/1.1
 # Host: localhost:8080 
@@ -40,7 +40,7 @@
 #     "password": "password"
 # }
 
-# DELETE /users/delete/646c5bc324b6ea4002ef81a6 HTTP/1.1
+# DELETE /users/delete/646e6271ba37a0931dab4556 HTTP/1.1
 # Host: localhost:8080
 
 # PUT /users/edit/646c45fa5e8a511c0482cce8 HTTP/1.1
@@ -52,14 +52,14 @@
 #     "password": "newpassword"
 # }
 
-POST /login HTTP/1.1
-Host: localhost:8080 
-content-type: application/json
+# POST /login HTTP/1.1
+# Host: localhost:8080 
+# content-type: application/json
 
-{
-    "username": "lilyneff3", 
-    "password": "password3"
-}
+# {
+#     "username": "lilyneff3", 
+#     "password": "password3"
+# }
 
 # GET /users HTTP/1.1
 # Host: localhost:8080
